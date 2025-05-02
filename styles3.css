@@ -1,0 +1,133 @@
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    margin: 0;
+
+}
+
+.container {
+    padding-top: 80px;
+    padding-bottom: 50px;
+    min-height: calc(100vh - 80px - 50px);
+}
+
+header,
+footer {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    padding: 1px;
+    background-color: rgb(244, 244, 244);
+}
+
+header {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+}
+
+footer {
+    flex-shrink: 0;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+}
+
+
+h1,
+h2 {
+    color: #007bff;
+    margin: 0;
+    text-align: left;
+}
+
+#trainDetails {
+    margin: 0px 20px;
+}
+
+#tablesContainer {
+    display: grid;
+    grid-template-columns: auto auto auto;
+    gap: 100px;
+    align-items: center;
+    justify-content: center;
+}
+
+table {
+    border-collapse: collapse;
+    width: 400px;
+}
+
+th,
+td {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 12px;
+}
+
+th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+}
+
+tr:nth-child(even) {
+    background-color: #D6EEEE;
+}
+
+tr:nth-child(odd) {
+    background-color: #f5f5f5;
+}
+
+.book-btn {
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    padding: 8px 14px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px;
+    margin: 4px 2px;
+    transition-duration: 0.4s;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.book-btn:hover {
+    background-color: #388e3c;
+}
+
+@media screen and (max-width: 992px) {
+    #tablesContainer {
+        display: block;
+    }
+
+    body {
+        margin: 0px;
+    }
+
+    .container {
+        margin: auto;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    #tablesContainer {
+        display: block;
+    }
+
+    body {
+        margin: 0px;
+    }
+
+    .container {
+        margin: auto;
+    }
+}

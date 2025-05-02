@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Available Trains</title>
+  <link rel="stylesheet" href="styles3.css">
+</head>
+
+<body>
+  <header>
+    <img src="images/logoabc.png" alt="ABC Travels Logo" width="40" height="40">
+    <h1>Travels</h1>
+  </header>
+
+  <div class="container">
+    <h2 style="margin: 0px 20px;">User details:</h2>
+    <div id="trainDetails">
+      <!-- Fetched train details will be displayed here -->
+    </div>
+    <div id="randomTrains">
+      <!-- Tables for each train detail -->
+      <div id="tablesContainer"></div>
+    </div><br><br>
+  </div>
+
+  <footer>
+    <p>Contact us at: 7146XX | abctravelstrain@gmail.com | abctravels@gmail.com</p>
+  </footer>
+
+  <script>
+    var urlParams = new URLSearchParams(window.location.search);
+    var departureLocation = urlParams.get('departure');
+    var arrivalLocation = urlParams.get('arrival');
+    var travelDate = urlParams.get('date');
+
+    var travelDetails = {
+      departureLocation: departureLocation,
+      arrivalLocation: arrivalLocation,
+      travelDate: travelDate
+    };
+
+    sessionStorage.setItem('travelDetails', JSON.stringify(travelDetails));
+
+    var trainDetailsElement = document.getElementById('trainDetails');
+    trainDetailsElement.innerHTML = `
+      <p><b>Departure Location: </b>${departureLocation}</p>
+      <p><b>Arrival Location: </b>${arrivalLocation}</p>
+      <p><b>Date of Travel: </b>${travelDate}</p>
+      <hr><h2 style="margin: 20px;">Available Trains</h2>
+    `;
+
+    var randomTrains = generateRandomTrains(6);
+    sessionStorage.setItem('randomTrains', JSON.stringify(randomTrains));
+
+    var tablesContainer = document.getElementById('tablesContainer');
+
+    randomTrains.forEach((train, index) => {
+      var table = document.createElement('table');
+
+      table.innerHTML = `
+        <br><caption><b><font size="5">${getTrainName(index)}</font></b></caption>
+        <tr><th>Departure Date</th><td>${travelDate}</td></tr>
+        <tr><th>Departure Time</th><td>${train.departureTime}</td></tr>
+        <tr><th>Arrival Date</th><td>${calculateArrivalDate(travelDate, train.departureTime, calculateDuration(train.departureTime, train.arrivalTime))}</td></tr>
+        <tr><th>Arrival Time</th><td>${train.arrivalTime}</td></tr>
+        <tr><th>Travel Duration</th><td>${calculateDuration(train.departureTime, train.arrivalTime)}</td></tr>
+        <tr><th>Available Seats</th><td>${train.availableSeats}</td></tr>
+        <tr><th>Book Now</th><td><button class="book-btn" onclick="bookTrain('${getTrainName(index)}')">Book Now</button></td></tr>
+      `;
+      tablesContainer.appendChild(table);
+    });
+
+    function generateRandomTrains(numTrains) {
+      var trains = [];
+      for (var i = 0; i < numTrains; i++) {
+        var departureTime = getRandomTime();
+        var arrivalTime = getRandomTimeAfter(departureTime);
+        trains.push({
+          name: "Rajghat Trains",
+          departureTime: departureTime,
+          arrivalTime: arrivalTime,
+          availableSeats: Math.floor(Math.random() * 200)
+        });
+      }
+      return trains;
+    }
+
+    function getRandomTime() {
+      var hour = Math.floor(Math.random() * 24);
+      var minute = Math.floor(Math.random() * 60);
+      return `${hour < 10 ? '0' + hour : hour}:${minute < 10 ? '0' + minute : minute}`;
+    }
+
+    function getRandomTimeAfter(startTime) {
+      var [startHour, startMinute] = startTime.split(':').map(Number);
+      var endHour = startHour + Math.floor(Math.random() * (24 - startHour));
+      var endMinute = Math.floor(Math.random() * 60);
+      if (endHour === startHour && endMinute <= startMinute) {
+        endMinute = startMinute + 1;
+      }
+      return `${endHour < 10 ? '0' + endHour : endHour}:${endMinute < 10 ? '0' + endMinute : endMinute}`;
+    }
+
+    function calculateDuration(startTime, endTime) {
+      var [startHour, startMinute] = startTime.split(':').map(Number);
+      var [endHour, endMinute] = endTime.split(':').map(Number);
+      var durationHour = endHour - startHour;
+      var durationMinute = endMinute - startMinute;
+      if (durationMinute < 0) {
+        durationHour--;
+        durationMinute += 60;
+      }
+      return `${durationHour} hours ${durationMinute} minutes`;
+    }
+
+    function calculateArrivalDate(departureDate, departureTime, duration) {
+      var [departureHour, departureMinute] = departureTime.split(':').map(Number);
+      var [durationHours, , durationMinutes] = duration.split(' ').map(Number);
+
+      var departureDateTime = new Date(departureDate);
+      departureDateTime.setHours(departureHour);
+      departureDateTime.setMinutes(departureMinute);
+
+      var arrivalDateTime = new Date(departureDateTime.getTime() + (durationHours * 60 * 60 * 1000) + (durationMinutes * 60 * 1000));
+      return arrivalDateTime.toDateString();
+    }
+
+    function getTrainName(index) {
+      var names = ["Rajghat Trains", "VandeBharat Exp", "Diamond Rail", "Shatabdi Exp", "HNT Rail", "Rajdhani Exp"];
+      return names[index];
+    }
+
+    function bookTrain(trainName) {
+      window.location.href = "4_travel_detail.html";
+    }
+  </script>
+</body>
+
+</html>

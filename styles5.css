@@ -1,0 +1,142 @@
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    margin: 0;
+}
+
+
+.container {
+    padding-top: 80px;
+    padding-bottom: 50px;
+    min-height: calc(100vh - 80px - 50px);
+}
+
+header,
+footer {
+    text-align: center;
+    padding: 1px;
+    background-color: rgb(244, 244, 244);
+}
+
+header {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+}
+
+footer {
+    flex-shrink: 0;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+}
+
+
+#ticketmain {
+    border: 1px solid black;
+    margin: 0px 200px;
+    background-color: white;
+}
+
+table {
+    border-collapse: collapse;
+    width: 80%;
+    margin: 20px auto;
+}
+
+th,
+td {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 12px;
+}
+
+th {
+    background-color: #d6eeee;
+    font-weight: bold;
+}
+
+tr:nth-child(even) {
+    background-color: #f5f5f5;
+}
+
+tr:nth-child(odd) {
+    background-color: #f5f5f5;
+}
+
+.hidden {
+    display: none;
+}
+
+button {
+    width: 200px;
+    padding: 10px;
+    background-color: #4CAF50;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #388e3c;
+}
+
+.box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.payment-success {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+}
+
+.payment-success img {
+    width: 80px;
+    height: 80px;
+    margin-right: 10px;
+    animation: twinkling 1s infinite;
+}
+
+@keyframes twinkling {
+    0% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.5;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    #ticketmain {
+        display: none;
+    }
+
+}
+
+@media screen and (max-width: 992px) {
+    #ticketmain {
+        display: none;
+    }
+
+}

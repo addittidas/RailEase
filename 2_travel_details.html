@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Travel Details</title>
+  <link rel="stylesheet" href="styles2.css">
+</head>
+
+<body>
+
+  <header>
+    <img src="images\logoabc.png" alt="ABC Travels Logo" width="40" height="40">
+    <h1> Travels</h1>
+  </header>
+
+  <div class="container">
+    <h2>Welcome <span id="welcomeName"></span>!</h2><br>
+    <p><b>Please provide your travel details:</b></p><br>
+
+    <form id="travelDetailsForm" action="2_travel_details.html" method="GET" onsubmit="return submitTravelDetails()">
+
+      <label for="departureLocation">Departure Location:</label>
+      <select id="departureLocation" onchange="updateArrivalLocations()" required>
+        <option value="">Select Departure Location</option>
+        <option value="New Delhi">New Delhi</option>
+        <option value="Kolkata">Kolkata</option>
+        <option value="Chennai">Chennai</option>
+        <option value="Mumbai">Mumbai</option>
+      </select> <br><br>
+      <label for="arrivalLocation">Arrival Location:</label>
+      <select id="arrivalLocation" required>
+        <option value="">Select Arrival Location</option>
+        <option value="New Delhi">New Delhi</option>
+        <option value="Kolkata">Kolkata</option>
+        <option value="Chennai">Chennai</option>
+        <option value="Mumbai">Mumbai</option>
+      </select> <br><br>
+      <label for="travelDate">Date of Travel:</label>
+      <input type="date" id="travelDate" min="" required><br><br><br>
+      <button type="submit">Submit</button>
+    </form>
+  </div>
+
+  <footer>
+    <p>Contact us at: 7146XX | abctravelstrain@gmail.com | abctravels@gmail.com</p>
+  </footer>
+
+  <script>
+    // Parse name from URL query parameter
+    var urlParams = new URLSearchParams(window.location.search);
+    var name = urlParams.get('name');
+
+    // Display welcome message with the user's name
+    document.getElementById('welcomeName').textContent = name;
+
+    // Update arrival locations based on departure location
+    function updateArrivalLocations() {
+      var departureLocation = document.getElementById('departureLocation').value;
+      var arrivalLocationSelect = document.getElementById('arrivalLocation');
+
+      // Enable all options first
+      for (var i = 0; i < arrivalLocationSelect.options.length; i++) {
+        arrivalLocationSelect.options[i].disabled = false;
+      }
+
+      // Disable selected departure location in arrival locations
+      for (var i = 0; i < arrivalLocationSelect.options.length; i++) {
+        if (arrivalLocationSelect.options[i].value === departureLocation) {
+          arrivalLocationSelect.options[i].disabled = true;
+        }
+      }
+    }
+
+    // Set min date to today for travel date input
+    var today = new Date();
+    var dd = String(today.getDate()).padStart(2, '0');
+    var mm = String(today.getMonth() + 1).padStart(2, '0'); // January is 0!
+    var yyyy = today.getFullYear();
+    var minDate = yyyy + '-' + mm + '-' + dd;
+    document.getElementById('travelDate').setAttribute('min', minDate);
+
+    function submitTravelDetails() {
+      var departureLocation = document.getElementById('departureLocation').value;
+      var arrivalLocation = document.getElementById('arrivalLocation').value;
+      var travelDate = document.getElementById('travelDate').value;
+
+      // Redirect to TrainSelect.html with travel details as query parameters
+      var url = `3_train_select.html?departure=${encodeURIComponent(departureLocation)}&arrival=${encodeURIComponent(arrivalLocation)}&date=${encodeURIComponent(travelDate)}`;
+      window.location.href = url;
+
+      // Prevent form submission
+      return false;
+    }
+  </script>
+
+</body>
+
+</html>

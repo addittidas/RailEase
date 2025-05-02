@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Traveler Details</title>
+  <link rel="stylesheet" href="styles4.css">
+</head>
+
+<body>
+
+  <header>
+    <img src="images\logoabc.png" alt="ABC Travels Logo" width="40" height="40">
+    <h1> Travels</h1>
+  </header>
+  <dic class="maincontain">
+    <div class="container">
+
+      <!-- Traveler details form -->
+      <form id="travelerDetailsForm" onsubmit="return showPaymentForm()">
+        <h2>Enter Traveler Details</h2>
+        <br><br>
+        <div id="primaryTraveler">
+          <label for="name">Name:</label>
+          <input type="text" id="name" name="name" required>
+
+          <label for="age">Age:</label>
+          <input type="number" id="age" name="age" min="0" required>
+
+          <label for="gender">Gender:</label>
+          <select id="gender" name="gender" required>
+            <option value="">Select Gender</option>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+            <option value="Other">Other</option>
+          </select>
+
+          <label for="foodPreference">Food Preference:</label>
+          <select id="foodPreference" name="foodPreference" required>
+            <option value="">Select Food Preference</option>
+            <option value="Vegetarian">Vegetarian</option>
+            <option value="Non-Vegetarian">Non-Vegetarian</option>
+          </select>
+
+          <label for="windowPreference">Window Preference:</label>
+          <select id="windowPreference" name="windowPreference" required>
+            <option value="">Select Window Preference</option>
+            <option value="Window">Window</option>
+            <option value="Aisle">Aisle</option>
+          </select>
+        </div>
+        <br>
+        <!-- Button to add additional travelers -->
+        <button type="button" onclick="addAdditionalTraveler()">Add Another Traveler</button>
+
+        <button type="submit">Proceed to Payment</button>
+      </form>
+
+      <!-- Payment details form -->
+      <form id="paymentForm" style="display: none;">
+        <h2>Payment Details</h2>
+        <br><br>
+        <div id="totalAmount"></div> <!-- Display total amount here -->
+        <label for="cardNumber">Card Number:</label>
+        <input type="text" id="cardNumber" name="cardNumber" maxlength="12" required>
+
+        <label for="expiryDate">Expiry Date:</label>
+        <input type="text" id="expiryDate" name="expiryDate" placeholder="MM/YYYY" pattern="\d{2}/\d{4}" required>
+
+        <label for="cvv">CVV:</label>
+        <input type="password" id="cvv" name="cvv" maxlength="3" required>
+
+        <button type="button" onclick="simulatePayment()">Make Payment</button>
+      </form>
+    </div>
+    </div>
+    <footer>
+      <p>Contact us at: 7146XX | abctravelstrain@gmail.com | abctravels@gmail.com</p>
+    </footer>
+    <script>
+      // Function to add additional traveler details
+
+      function addAdditionalTraveler() {
+        var primaryTravelerDiv = document.getElementById('primaryTraveler');
+        var additionalTravelerDiv = primaryTravelerDiv.cloneNode(true);
+        additionalTravelerDiv.id = ''; // Remove ID to prevent duplication
+        additionalTravelerDiv.classList.add('additional-traveler-details');
+
+        // Add remove button
+        var removeButton = document.createElement('button');
+        removeButton.textContent = 'Remove Traveler';
+        removeButton.setAttribute('type', 'button');
+        removeButton.onclick = function () {
+          additionalTravelerDiv.remove();
+        };
+        additionalTravelerDiv.appendChild(removeButton);
+
+        // Clear the input values
+        additionalTravelerDiv.querySelectorAll('input, select').forEach(function (element) {
+          element.value = '';
+        });
+
+        var button = document.querySelector('button[type="button"]');
+        primaryTravelerDiv.parentNode.insertBefore(additionalTravelerDiv, button);
+        // Show the additional traveler details
+        additionalTravelerDiv.style.display = 'block';
+
+
+      }
+
+      // Function to toggle between traveler details form and payment details form
+      function showPaymentForm() {
+        // Store traveler details in sessionStorage
+        var travelerDetails = [];
+        var primaryTravelerInputs = document.querySelectorAll('#primaryTraveler input, #primaryTraveler select');
+        travelerDetails.push(getInputValues(primaryTravelerInputs));
+
+        var additionalTravelerDivs = document.querySelectorAll('.additional-traveler-details');
+        additionalTravelerDivs.forEach(function (div) {
+          var inputs = div.querySelectorAll('input, select');
+          travelerDetails.push(getInputValues(inputs));
+        });
+
+        sessionStorage.setItem('travelerDetails', JSON.stringify(travelerDetails));
+
+        // Calculate and display total amount
+        var totalAmount = travelerDetails.length * 1500; // Assuming 1500 per traveler
+        document.getElementById('totalAmount').textContent = 'Total Amount: Rs. ' + totalAmount.toFixed(2);
+
+        // Hide the traveler details form
+        document.getElementById('travelerDetailsForm').style.display = 'none';
+        // Show the payment details form
+        document.getElementById('paymentForm').style.display = 'block';
+        // Prevent form submission (to avoid page refresh)
+        return false;
+      }
+
+      // Helper function to get input values
+      function getInputValues(inputs) {
+        var values = {};
+        inputs.forEach(function (input) {
+          values[input.name] = input.value;
+        });
+        return values;
+      }
+
+
+
+      function simulatePayment() {
+        var cardNumber = document.getElementById('cardNumber').value;
+        var cvv = document.getElementById('cvv').value;
+
+        if (cardNumber.length < 12) {
+          alert("Card number must be 12 digits long.");
+          return; // Prevent further execution
+        }
+
+        // Validate expiry date
+        var expiryDateInput = document.getElementById('expiryDate');
+        var expiryDate = expiryDateInput.value;
+        var month = expiryDate.split('/')[0]; // Get the month part of the input value
+        if (parseInt(month) < 1 || parseInt(month) > 12) {
+          alert("Please enter a valid month (01-12) in the expiry date.");
+          return false; // Prevent form submission if validation fails
+        }
+
+        if (cvv.length < 3) {
+          alert("CVV must be 3 digits long.");
+          return; // Prevent further execution
+        }
+
+        window.location.href = "5_ticket_sum.html";
+      }
+
+
+    </script>
+
+</body>
+
+</html>

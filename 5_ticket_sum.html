@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Payment Successful</title>
+  <link rel="stylesheet" href="styles5.css">
+</head>
+
+<body>
+
+  <header>
+    <img src="images\logoabc.png" alt="ABC Travels Logo" width="40"
+      height="40">
+    <h1 style="color: #007bff; margin: 0;"> Travels</h1>
+  </header>
+  <div class="container">
+
+    <div class="payment-success">
+      <img src="images\icon-success.png" alt="Checked Symbol">
+      <h2 id="paymentSuccessMessage" style="font-size:25px;">Your payment is successful!</h2>
+    </div>
+
+    <br><br>
+
+    <div id="ticketmain" class="hidden">
+      <div id="ticketMessage" class="hidden box">
+        <img src="images\logoabc.png" alt="ABC Travels Logo"
+          width="40" height="40">
+        <h2>Travels</h2>
+
+      </div>
+      <h2>Ticket Summary</h2>
+      <br>
+
+      <!-- Display ticket summary for each traveler -->
+      <table id="ticketSummaries" class="hidden">
+        <thead>
+          <tr>
+            <th>Traveler</th>
+            <th>Name</th>
+            <th>Age</th>
+            <th>Gender</th>
+            <th>Food Preference</th>
+            <th>Window Preference</th>
+            <th>Seat Number</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+      <br>
+      <div id="transactionId" class="hidden">
+        <h3>Transaction ID: <span id="transactionIdValue"></span></h3>
+      </div>
+
+      <div id="totalAmount" class="hidden">
+        <h3>Total Fare: Rs. <span id="totalAmountValue"></span></h3>
+      </div>
+
+    </div>
+    <br><br><br>
+    <!-- Download ticket button -->
+    <button id="downloadButton" class="hidden" onclick="downloadTicket()">Download Full Ticket</button>
+
+    <!-- Cancel ticket button -->
+    <button id="cancelButton" class="hidden" onclick="cancelTicket()">Cancel Ticket</button>
+    <br><br><br>
+  </div>
+  <footer>
+    <p>Contact us at: 7146XX | abctravelstrain@gmail.com | abctravels@gmail.com</p>
+  </footer>
+
+
+
+  <script>
+    // Retrieve traveler details from sessionStorage
+    var travelerDetails = JSON.parse(sessionStorage.getItem('travelerDetails'));
+
+    // Retrieve train details from sessionStorage
+    var trainDetails = JSON.parse(sessionStorage.getItem('trainDetails'));
+
+    // Generate random seat number
+    function generateSeatNumber() {
+      return Math.floor(Math.random() * 100) + 1;
+    }
+
+    // Generate random transaction ID
+    function generateTransactionId() {
+      return Math.random().toString(36).substr(2, 10); // Generates a random string of 10 characters
+    }
+
+    // Display ticket summaries for each traveler
+    if (travelerDetails && travelerDetails.length > 0) {
+      var ticketSummariesContainer = document.getElementById('ticketSummaries');
+
+      travelerDetails.forEach(function (traveler, index) {
+        var row = document.createElement('tr');
+        var seatNumber = generateSeatNumber();
+        row.innerHTML = `
+          <td>${index + 1}</td>
+          <td>${traveler.name}</td>
+          <td>${traveler.age}</td>
+          <td>${traveler.gender}</td>
+          <td>${traveler.foodPreference}</td>
+          <td>${traveler.windowPreference}</td>
+          <td>${seatNumber}</td>
+        `;
+        ticketSummariesContainer.querySelector('tbody').appendChild(row);
+      });
+
+
+    }
+
+    // Display "Here is your ticket" message and ticket summary after a delay
+    setTimeout(function () {
+      var ticketMessage = document.getElementById('ticketmain');
+      ticketMessage.classList.remove('hidden');
+
+      var ticketMessage = document.getElementById('ticketMessage');
+      ticketMessage.classList.remove('hidden');
+
+
+
+      var ticketSummaries = document.getElementById('ticketSummaries');
+      ticketSummaries.classList.remove('hidden');
+
+      // Generate and display transaction ID
+      var transactionId = generateTransactionId();
+      document.getElementById('transactionIdValue').textContent = transactionId;
+      document.getElementById('transactionId').classList.remove('hidden');
+
+      // Calculate total amount
+      var totalAmount = travelerDetails.length * 1500; // Assuming Rs.1500 per traveler
+      document.getElementById('totalAmountValue').textContent = totalAmount.toFixed(2);
+      document.getElementById('totalAmount').classList.remove('hidden');
+
+      // Show download and cancel buttons
+      document.getElementById('downloadButton').classList.remove('hidden');
+      document.getElementById('cancelButton').classList.remove('hidden');
+    }, 2000); // Adjust delay time (in milliseconds) as needed
+
+    // Function to download the ticket
+    function downloadTicket() {
+      // Perform ticket download logic here
+      alert("Ticket downloaded!");
+    }
+
+    // Function to cancel the ticket
+    function cancelTicket() {
+      // Perform ticket cancellation logic here
+      alert("Ticket cancelled!");
+    }
+  </script>
+</body>
+
+</html>
