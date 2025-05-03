@@ -9,7 +9,6 @@
 - Responsive design (with external CSS)
 
 - **Session Storage-Based State Management**:
-
 All user selections (departure, arrival, date, selected train, passenger details) are maintained across pages using sessionStorage, eliminating the need for backend sessions.
 
 - **Dynamic Train Generation with Time Calculations**:
