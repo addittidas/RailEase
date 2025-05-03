@@ -4,15 +4,18 @@
 
 ## 🔧 Features
 
-- **User Registration**: Users can create an account to store their details for future bookings.
-- **Train Search**: Users can select departure and arrival locations along with the travel date to view available trains.
-- **Passenger Details**: After selecting a train, users can input passenger details.
-- **Payment**: Once details are entered, users can proceed with payment.
-- **Ticket Generation**: After a successful transaction, users will receive a randomly generated ticket with an ID.
-
 - Simple and clean UI with modern styling
 
 - Responsive design (with external CSS)
+
+- **Session Storage-Based State Management**
+All user selections (departure, arrival, date, selected train, passenger details) are maintained across pages using sessionStorage, eliminating the need for backend sessions.
+
+- **Dynamic Train Generation with Time Calculations**
+Train options are generated randomly in real-time with dynamic departure and arrival times. Arrival date and travel duration are calculated using JavaScript Date APIs.
+
+- **Modular Page-to-Page Navigation Flow**
+The app is structured into distinct HTML files, mimicking a multi-page application where each page performs a dedicated function, ensuring clear code separation and modularity.
 
 ## Steps Involved
 
