@@ -8,13 +8,13 @@
 
 - Responsive design (with external CSS)
 
-- **Session Storage-Based State Management**
+- **Session Storage-Based State Management**:
 All user selections (departure, arrival, date, selected train, passenger details) are maintained across pages using sessionStorage, eliminating the need for backend sessions.
 
-- **Dynamic Train Generation with Time Calculations**
+- **Dynamic Train Generation with Time Calculations**:
 Train options are generated randomly in real-time with dynamic departure and arrival times. Arrival date and travel duration are calculated using JavaScript Date APIs.
 
-- **Modular Page-to-Page Navigation Flow**
+- **Modular Page-to-Page Navigation Flow**:
 The app is structured into distinct HTML files, mimicking a multi-page application where each page performs a dedicated function, ensuring clear code separation and modularity.
 
 ## Steps Involved
@@ -32,13 +32,13 @@ The app is structured into distinct HTML files, mimicking a multi-page applicati
 6. **Ticket Generation**: 
     - A random ticket ID is generated once payment is confirmed.
 
-## ⚙️ Tech Stack
+## Tech Stack
 
 - HTML5
 - CSS3
 - Vanilla JavaScript
 
-## 💡 How to Run
+## How to Run
 
 1. Clone the repository or download the files.
     ```bash
