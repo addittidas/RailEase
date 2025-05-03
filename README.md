@@ -2,13 +2,14 @@
 
 **RailEase** is a modern, interactive frontend web train booking application that provides a seamless and user-friendly experience for booking train tickets online. The platform takes users through a complete journey — from registration to ticket generation. It simulates booking functionality with dynamically generated train data.
 
-## 🔧 Features
+## Features
 
 - Simple and clean UI with modern styling
 
 - Responsive design (with external CSS)
 
 - **Session Storage-Based State Management**:
+
 All user selections (departure, arrival, date, selected train, passenger details) are maintained across pages using sessionStorage, eliminating the need for backend sessions.
 
 - **Dynamic Train Generation with Time Calculations**:
